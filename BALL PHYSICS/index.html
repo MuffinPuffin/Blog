@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+	<html>
+	<head>
+		<title>Bouncy Ball</title>
+		<canvas id = "myCanva" width = "600" height = "400" style = "border: 1px solid black"></canvas>
+		<script>
+			var canvas;
+			var ctx;
+			var x=300, y= 50, ve1x=0, ve1y=0, r=20;
+			var gravity=0.2;
+
+			function init()
+			{
+				canvas = document.getElementById("myCanva");
+				ctx = canvas.getContext("2d");
+
+				return setInterval(draw,10);
+			}
+			function circle(x, y, r)
+			{
+				ctx.beginPath();
+				ctx.arc(x, y, r, 0, Math.PI*2)
+				ctx.fillStyle = "black";
+				ctx.closePath();
+				ctx.fill();
+			}
+			function clear()
+			{
+				ctx.clearRect(0,0,600,400)
+
+			}
+
+			function draw()
+			{
+				clear();
+
+				ve1y += gravity;
+				y += ve1y;
+				x += ve1x;
+
+				if (y+r > 400)
+				{
+					y = 400 - r;
+					ve1y = -ve1y*0.9 
+				}
+				else if (y-r < 0)
+				{
+					y = r;
+					ve1y = -ve1y*0.9 
+				}
+				if (x+r > 600)
+				{
+					x = 600 - r;
+					ve1x = -ve1x*0.5 
+				}
+				else if (x+r < 0)
+				{
+					x = r;
+					ve1x = -ve1x*0.5 
+				}
+			
+				circle(x, y, r);
+			}
+
+			function ballMove()
+			{
+				if (event.key == "a") {
+					ve1x = -20;
+					ve1y = -20;
+				}
+				if (event.key == "d") {
+					ve1x = 20;
+					ve1y = -20;
+				}
+			}
+		</script>
+	</head>
+	<body onload="init()" onkeydown="ballMove()">
+	</body>
+</html>
